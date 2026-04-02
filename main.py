@@ -70,7 +70,14 @@ def main():
 
     # slice(None is like saying : to show that we start from 0 until the end, but we
     # Can't use : in ())
-    sales.loc[(slice(None), 1), :]
+    
+    # sales.loc[(slice(None), 1), :]
+    
+    # print(sales.loc[("2015-07-1", 42), "Customers"])
+    
+    # print(sales.loc[("2015-07-2", slice(None)), "Sales"].sum())
+    
+    # print(sales.loc[("2015-07-3", [2, 15, 18]), "Sales"].sum())
 
 if __name__ == "__main__":
     
