@@ -44,15 +44,33 @@ def main():
         7: "Sun"
     }
     
-    sales["DayOfWeek"] = sales["DayOfWeek"].map(index_to_day_of_week).astype("category")
+    # sales["DayOfWeek"] = sales["DayOfWeek"].map(index_to_day_of_week).astype("category")
 
-    print(sales.loc[sales["Customers"] > 4_000])
+    # print(sales.loc[sales["Customers"] > 4_000])
     
-    print(sales.loc[sales["DayOfWeek"] == "Sun", "Sales"].mean())
+    # print(sales.loc[sales["DayOfWeek"] == "Sun", "Sales"].mean())
     
-    print(pd.notna(sales["CompetitionDistance"]).count())
+    # print(pd.notna(sales["CompetitionDistance"]).count())
     
-    print(sales["Date"].value_counts())
+    # print(sales["Date"].value_counts())
+    
+    sales = sales.set_index(["Date", "Store"])
+    
+    # print(sales.head(5))
+    
+    # print(sales.index)
+    
+    # print(sales.index.get_level_values("Date"))    # Or (0)
+    
+    # print(sales.loc[("2015-07-01", 1)])
+    
+    # print(sales.loc[("2015-07-01", 1), "Sales"])
+    
+    # print(sales.loc["2015-07-01"])
+
+    # slice(None is like saying : to show that we start from 0 until the end, but we
+    # Can't use : in ())
+    sales.loc[(slice(None), 1), :]
 
 if __name__ == "__main__":
     
