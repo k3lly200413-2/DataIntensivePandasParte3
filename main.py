@@ -44,7 +44,15 @@ def main():
         7: "Sun"
     }
     
-    sales["DaysOfWeek"] = sales["DaysOfWeek"].map(index_to_day_of_week).astype("categorys")
+    sales["DayOfWeek"] = sales["DayOfWeek"].map(index_to_day_of_week).astype("category")
+
+    print(sales.loc[sales["Customers"] > 4_000])
+    
+    print(sales.loc[sales["DayOfWeek"] == "Sun", "Sales"].mean())
+    
+    print(pd.notna(sales["CompetitionDistance"]).count())
+    
+    print(sales["Date"].value_counts())
 
 if __name__ == "__main__":
     
