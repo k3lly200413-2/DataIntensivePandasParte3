@@ -44,7 +44,7 @@ def main():
         7: "Sun"
     }
     
-    # sales["DayOfWeek"] = sales["DayOfWeek"].map(index_to_day_of_week).astype("category")
+    sales["DayOfWeek"] = sales["DayOfWeek"].map(index_to_day_of_week).astype("category")
 
     # print(sales.loc[sales["Customers"] > 4_000])
     
@@ -78,6 +78,38 @@ def main():
     # print(sales.loc[("2015-07-2", slice(None)), "Sales"].sum())
     
     # print(sales.loc[("2015-07-3", [2, 15, 18]), "Sales"].sum())
+    
+    # per ogni possibile valore distinto di giorno della settimana
+    # for dow in sales["DayOfWeek"].unique():
+    #     # estraggo i relativi valori di Sales dal frame e calcolo la media
+    #     mean_sales_on_dow = sales.loc[sales["DayOfWeek"] == dow, "Sales"].mean()
+    #     # stampo il giorno della settimana e la media
+    #     # align right with width of 4
+    #     print(f"{dow:>4}: {mean_sales_on_dow:6.2f}")
+        
+    # print(sales.groupby("DayOfWeek").ngroups)
+    
+    # print(list(sales.groupby("DayOfWeek").groups.keys()))
+    
+    # print(sales.groupby("DayOfWeek").mean(numeric_only=True))
+    
+    # print(sales.groupby("DayOfWeek")["Sales"].mean())
+    
+    # sales.groupby("DayOfWeek")["Sales"].describe()
+    
+    # sales.groupby("DayOfWeek")["Sales"].describe().T
+    
+    # print(sales.groupby("DayOfWeek")["Sales"].agg(["sum", "mean"]))
+    
+    # print(sales.groupby("DayOfWeek")[["Sales", "Customers"]].agg(["mean", "std"]))
+    
+    # print(pd.qcut(sales["CompetitionDistance"], 3))
+
+    # print(sales.groupby(pd.qcut(sales["CompetitionDistance"], 3))[["Sales", "Customers"]].mean())
+
+    print(sales.groupby(["StoreType", "Assortment"])[["Sales", "Customers"]].mean())
+
+
 
 if __name__ == "__main__":
     
