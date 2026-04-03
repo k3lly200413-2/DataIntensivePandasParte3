@@ -107,9 +107,13 @@ def main():
 
     # print(sales.groupby(pd.qcut(sales["CompetitionDistance"], 3))[["Sales", "Customers"]].mean())
 
-    print(sales.groupby(["StoreType", "Assortment"])[["Sales", "Customers"]].mean())
-
-
+    # print(sales.groupby(["StoreType", "Assortment"])[["Sales", "Customers"]].mean())
+    
+    # print(sales.groupby(["DayOfWeek", "Promo"])["Customers"].mean())
+    
+    # print(sales.groupby(sales["DayOfWeek"].isin(["Sat", "Sun"]))[["Sales", "Customers"]].mean())
+    
+    # print(sales.groupby("Date")["Sales"].sum().idxmax())
 
 if __name__ == "__main__":
     
