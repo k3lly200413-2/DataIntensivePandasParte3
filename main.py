@@ -114,7 +114,57 @@ def main():
     # print(sales.groupby(sales["DayOfWeek"].isin(["Sat", "Sun"]))[["Sales", "Customers"]].mean())
     
     # print(sales.groupby("Date")["Sales"].sum().idxmax())
-
+    
+    # print(sales.groupby(["StoreType", "Assortment"])["Sales"].mean())
+    
+    # `stack` sposta un livello dall'indice delle colonne a quello delle righe, 
+    # per cui dati che prima erano affiancati vengono impilati (_stacked_) 
+    # uno sopra l'altro.
+    
+    #`unstack` al contrario sposta un livello dall'indice delle righe 
+    # a quello delle colonne, 
+    # rendendo affiancati dati che prima erano impilati.
+    
+    mean_sales_by_categories = sales.groupby(["StoreType", "Assortment"])["Sales"].mean()
+    mean_sales_by_categories.unstack()
+    print(mean_sales_by_categories)
+    # mean_sales_by_categories.unstack("StoreType")  # oppure unstack(0)
+    # mean_sales_by_categories.dropna()
+    # mean_sales_by_categories.dropna().unstack()
+    
+    means_by_categories = sales.groupby(["StoreType", "Assortment"])[["Sales", "Customers"]].agg(["sum", "mean"])
+    print(means_by_categories.unstack("Assortment"))
+    print(means_by_categories.stack(1))
+    # reorder_levels takes the index of the original columns
+    means_by_categories.stack(1).reorder_levels([2, 0, 1], axis=0)
+    # sorts the index so first all means then all sums
+    means_by_categories.stack(1).reorder_levels([2, 0, 1], axis=0).sort_index()
+    
+    sales.pivot_table(
+        values=["Sales", "Customers"],      # ricavi e numero clienti
+        index=["StoreType", "Assortment"],  # per tipologia di negozio
+        columns=[],
+        aggfunc=["sum", "mean"],            # totali e medi giornalieri
+    )
+    
+    sales.pivot_table(
+        values=["Sales"],       # ricavi giornalieri
+        index=["DayOfWeek"],    # per giorno della settimana
+        columns=["StoreType"],  # per tipologia di negozio
+        aggfunc=["mean"],       # medi
+    )
+    
+    sales.pivot_table(
+        values=["Sales"],       # ricavi giornalieri
+        index=["DayOfWeek"],    # per giorno della settimana
+        columns=["StoreType"],  # per tipologia di negozio
+        aggfunc=["mean"],       # medi
+        margins=True,
+        margins_name="Tutti",
+    )
+    
+    print(sales.groupby(["DayOfWeek", "Promo"])["Customers"])
+    
 if __name__ == "__main__":
     
     main()
